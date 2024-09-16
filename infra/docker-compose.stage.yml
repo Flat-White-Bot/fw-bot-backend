@@ -10,7 +10,7 @@ services:
     extends:
       file: common-services.yml
       service: backend
-    image: ghcr.io/studio-yandex-practicum/coliving_bot_backend:test
+    image: ghcr.io/flat-white-bot/fw-backend:test
     depends_on:
       db:
         condition: service_healthy
@@ -19,7 +19,7 @@ services:
     extends:
       file: common-services.yml
       service: bot
-    image: ghcr.io/studio-yandex-practicum/coliving_bot:test
+    image: ghcr.io/flat-white-bot/fw-bot:test
     depends_on:
       - backend
 

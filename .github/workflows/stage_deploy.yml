@@ -11,10 +11,10 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BOT_IMAGE_NAME: coliving_bot
-  BACKEND_IMAGE_NAME: coliving_bot_backend
+  BOT_IMAGE_NAME: fw-bot
+  BACKEND_IMAGE_NAME: fw-backend
   DEPLOY_PATH: ~/coliving_bot
-  REP_OWNER: studio-yandex-practicum
+  REP_OWNER: flat-white-bot
 
 defaults:
   run:

@@ -21,7 +21,7 @@ services:
     build:
       context: ..
       dockerfile: /src/backend/Dockerfile
-    image: coliving_bot_backend:latest
+    image: fw-backend:latest
     container_name: backend
     restart: always
     volumes:
@@ -41,7 +41,7 @@ services:
     build:
       context: ..
       dockerfile: /src/bot/Dockerfile
-    image: coliving_bot:latest
+    image: fw-bot:latest
     container_name: bot
     restart: always
     command: bash -c "python run_bot.py"
