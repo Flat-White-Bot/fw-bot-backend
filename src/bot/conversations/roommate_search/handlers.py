@@ -12,7 +12,7 @@ from conversations.common_functions import common_buttons, common_funcs
 from conversations.menu.buttons import SEARCH_NEIGHBOR_BUTTON
 from conversations.menu.constants import CANCEL_COMMAND, MENU_COMMAND
 from conversations.profile.constants import AGE_PATTERN
-from conversations.roommate_search.states import States
+from conversations.roommate_search import states
 from conversations.roommate_search.validators import (
     handle_text_input_instead_of_choosing_button,
 )
@@ -22,7 +22,7 @@ roommate_search_handler: ConversationHandler = ConversationHandler(
         CallbackQueryHandler(callbacks.start, rf"^{SEARCH_NEIGHBOR_BUTTON}$")
     ],
     states={
-        States.AGE_MIN: [
+        states.AGE_MIN: [
             MessageHandler(
                 callback=callbacks.handle_age_min_text_response,
                 filters=filters.Regex(AGE_PATTERN),
@@ -36,7 +36,7 @@ roommate_search_handler: ConversationHandler = ConversationHandler(
                 filters=~filters.COMMAND & filters.TEXT,
             ),
         ],
-        States.AGE_MAX: [
+        states.AGE_MAX: [
             MessageHandler(
                 callback=callbacks.handle_age_max_text_response,
                 filters=filters.Regex(AGE_PATTERN),
@@ -50,7 +50,7 @@ roommate_search_handler: ConversationHandler = ConversationHandler(
                 filters=~filters.COMMAND & filters.TEXT,
             ),
         ],
-        States.LOCATION: [
+        states.LOCATION: [
             CallbackQueryHandler(
                 callback=callbacks.set_location,
                 pattern=common_buttons.LOCATION_CALLBACK_PATTERN,
@@ -60,7 +60,7 @@ roommate_search_handler: ConversationHandler = ConversationHandler(
                 handle_text_input_instead_of_choosing_button,
             ),
         ],
-        States.NO_MATCHES: [
+        states.NO_MATCHES: [
             CallbackQueryHandler(
                 callback=callbacks.end_of_search,
                 pattern=rf"^{buttons.WAIT_BTN}$",
@@ -74,7 +74,7 @@ roommate_search_handler: ConversationHandler = ConversationHandler(
                 handle_text_input_instead_of_choosing_button,
             ),
         ],
-        States.PROFILE: [
+        states.PROFILE: [
             MessageHandler(
                 filters=filters.Regex(rf"^{buttons.LIKE_BTN}$"),
                 callback=callbacks.profile_like,
@@ -84,7 +84,7 @@ roommate_search_handler: ConversationHandler = ConversationHandler(
                 callback=callbacks.profile_dislike,
             ),
         ],
-        States.SEX: [
+        states.SEX: [
             CallbackQueryHandler(
                 callback=callbacks.set_sex,
                 pattern=(
@@ -98,7 +98,7 @@ roommate_search_handler: ConversationHandler = ConversationHandler(
                 handle_text_input_instead_of_choosing_button,
             ),
         ],
-        States.SEARCH_SETTINGS: [
+        states.SEARCH_SETTINGS: [
             CallbackQueryHandler(
                 callback=callbacks.ok_settings,
                 pattern=rf"^{buttons.OK_SETTINGS_BTN}$",

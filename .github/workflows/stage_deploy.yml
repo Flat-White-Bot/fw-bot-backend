@@ -11,10 +11,10 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BOT_IMAGE_NAME: coliving_bot
-  BACKEND_IMAGE_NAME: coliving_bot_backend
+  BOT_IMAGE_NAME: fw-bot
+  BACKEND_IMAGE_NAME: fw-backend
   DEPLOY_PATH: ~/coliving_bot
-  REP_OWNER: studio-yandex-practicum
+  REP_OWNER: flat-white-bot
 
 defaults:
   run:
@@ -98,6 +98,7 @@ jobs:
             echo POSTGRES_IMAGE='${{ secrets.POSTGRES_IMAGE }}' >> .env
 
             echo TOKEN=${{ secrets.TOKEN }} >> .env
+            echo CHANNEL=${{ vars.CHANNEL }} >> .env
             echo INTERNAL_API_URL=${{ secrets.INTERNAL_API_URL }} >> .env
 
             echo SECRET_KEY='${{ secrets.SECRET_KEY }}' >> .env

@@ -1,15 +1,11 @@
-import enum
+# Избегайте конфликтов с conversations.coliving_search.states
 
-
-class States(int, enum.Enum):
-    """Класс, описывающий состояния бота."""
-
-    (
-        AGE_MIN,
-        AGE_MAX,
-        LOCATION,
-        NO_MATCHES,
-        PROFILE,
-        SEX,
-        SEARCH_SETTINGS,
-    ) = range(7)
+(
+    AGE_MIN,
+    AGE_MAX,
+    LOCATION,
+    NO_MATCHES,
+    PROFILE,
+    SEX,
+    SEARCH_SETTINGS,
+) = range(0, 7)
