@@ -7,6 +7,7 @@ from telegram.ext import ContextTypes
 import conversations.coliving_search.keyboards as keyboards
 import conversations.coliving_search.states as states
 import conversations.coliving_search.templates as templates
+from conversations.channel_subscription.callback_funcs import require_subscription
 from conversations.coliving.constants import MAX_PRICE, MIN_PRICE
 from conversations.coliving_search import constants
 from conversations.common_functions.common_funcs import profile_required
@@ -43,6 +44,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return state
 
 
+@require_subscription
 async def ok_settings(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """
     Вызывается при подтверждении настроек поиска.

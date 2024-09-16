@@ -7,13 +7,14 @@ from telegram.ext import ContextTypes, ConversationHandler
 import conversations.match_requests.templates as match_templates
 import conversations.roommate_search.keyboards as keyboards
 import conversations.roommate_search.templates as templates
+from conversations.channel_subscription.callback_funcs import require_subscription
 from conversations.common_functions.common_funcs import profile_required
 from conversations.match_requests.constants import MatchStatus
 from conversations.match_requests.profile.keyboards import get_view_profile_keyboard
 from conversations.profile.templates import SHORT_PROFILE_DATA
+from conversations.roommate_search import states
 from conversations.roommate_search.buttons import ANY_GENDER_BTN
 from conversations.roommate_search.constants import SRCH_STNG_FIELD
-from conversations.roommate_search.states import States
 from internal_requests import api_service
 from internal_requests.entities import ProfileSearchSettings, UserProfile
 from utils.bot import safe_send_message
@@ -36,11 +37,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             text=templates.ASK_SEARCH_SETTINGS,
             reply_markup=keyboards.SEARCH_SETTINGS_KEYBOARD,
         )
-        return States.SEARCH_SETTINGS
+        return states.SEARCH_SETTINGS
     state = await edit_settings(update, context)
     return state
 
 
+@require_subscription
 async def ok_settings(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """
     Вызывается при подтверждении настроек поиска.
@@ -64,7 +66,7 @@ async def edit_settings(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         text=templates.ASK_LOCATION, reply_markup=context.bot_data["location_keyboard"]
     )
 
-    return States.LOCATION
+    return states.LOCATION
 
 
 async def set_location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -77,7 +79,7 @@ async def set_location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     await update.effective_message.edit_text(
         text=templates.ASK_SEX, reply_markup=keyboards.SEX_KEYBOARD
     )
-    return States.SEX
+    return states.SEX
 
 
 async def set_sex(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -91,7 +93,7 @@ async def set_sex(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         text=templates.ASK_AGE_MIN,
         reply_markup=keyboards.AGE_RANGE_IGNORE_KEYBOARD,
     )
-    return States.AGE_MIN
+    return states.AGE_MIN
 
 
 async def handle_age_min_button_response(
@@ -106,7 +108,7 @@ async def handle_age_min_button_response(
         text=templates.ASK_AGE_MAX,
         reply_markup=keyboards.AGE_RANGE_IGNORE_KEYBOARD,
     )
-    return States.AGE_MAX
+    return states.AGE_MAX
 
 
 async def handle_age_min_text_response(
@@ -124,7 +126,7 @@ async def handle_age_min_text_response(
         text=templates.ASK_AGE_MAX,
         reply_markup=keyboards.AGE_RANGE_IGNORE_KEYBOARD,
     )
-    return States.AGE_MAX
+    return states.AGE_MAX
 
 
 async def handle_age_max_button_response(
@@ -143,7 +145,7 @@ async def handle_age_max_button_response(
         + templates.ASK_SEARCH_SETTINGS,
         reply_markup=keyboards.SEARCH_SETTINGS_KEYBOARD,
     )
-    return States.SEARCH_SETTINGS
+    return states.SEARCH_SETTINGS
 
 
 async def handle_age_max_text_response(
@@ -171,7 +173,7 @@ async def handle_age_max_text_response(
         + templates.ASK_SEARCH_SETTINGS,
         reply_markup=keyboards.SEARCH_SETTINGS_KEYBOARD,
     )
-    return States.SEARCH_SETTINGS
+    return states.SEARCH_SETTINGS
 
 
 async def handle_wrong_age(update: Update, _context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -279,13 +281,13 @@ async def _get_next_user_profile(
             profile=profile,
             profile_template=SHORT_PROFILE_DATA,
         )
-        return States.PROFILE
+        return states.PROFILE
 
     await update.effective_message.reply_text(
         text=templates.NO_MATCHES,
         reply_markup=keyboards.NO_MATCHES_KEYBOARD,
     )
-    return States.NO_MATCHES
+    return states.NO_MATCHES
 
 
 async def send_profile_info(

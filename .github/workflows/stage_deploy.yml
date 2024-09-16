@@ -98,6 +98,7 @@ jobs:
             echo POSTGRES_IMAGE='${{ secrets.POSTGRES_IMAGE }}' >> .env
 
             echo TOKEN=${{ secrets.TOKEN }} >> .env
+            echo CHANNEL=${{ vars.CHANNEL }} >> .env
             echo INTERNAL_API_URL=${{ secrets.INTERNAL_API_URL }} >> .env
 
             echo SECRET_KEY='${{ secrets.SECRET_KEY }}' >> .env

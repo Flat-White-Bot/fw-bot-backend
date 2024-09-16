@@ -1,3 +1,5 @@
+# Избегайте конфликтов с conversations.roommate_search.states
+
 (
     COLIVING,
     COST_MAX,
@@ -8,4 +10,4 @@
     ROOM_TYPE,
     SEARCH_SETTINGS,
     MENU,
-) = range(9)
+) = range(7, 16)
